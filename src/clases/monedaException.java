@@ -1,7 +1,7 @@
 package clases;
 
-public class monedaException extends Exception{
-	public monedaException(String mensaje) {
+public class MonedaException extends Exception{
+	public MonedaException(String mensaje) {
 		super(mensaje);
 	}
 }

@@ -12,32 +12,36 @@ public class ConversorMain {
 	public static void main(String[] args) {
 
 		String[] opcMenuPrincipal = {"Conversor de moneda", "Conversor de temperatura"};
-		
-		String seleccion1=(String) JOptionPane.showInputDialog(null, "Seleccione una opción de conversión", "Menu", JOptionPane.INFORMATION_MESSAGE,
+
+		String seleccion=(String) JOptionPane.showInputDialog(null, "Seleccione una opción de conversión", "Menu", JOptionPane.INFORMATION_MESSAGE,
 				null, opcMenuPrincipal, opcMenuPrincipal[0]);
-		
-		if(seleccion1==opcMenuPrincipal[0]) {//Convertir moneda
-			float dineroConvertir;
+
+		if(seleccion==opcMenuPrincipal[0]) {//Convertir moneda
+			float dineroConvertir=-1;
 			boolean exception=true;;
-			
-			while(exception) {
+
+			while(exception | dineroConvertir < 0) {
 				try {
 					//Solicitar cantidad de dinero a convertir.
-					dineroConvertir=Float.parseFloat(JOptionPane.showInputDialog(null, "Ingrese la cantidad de dinero que desea convertir: ", "Ingreso de datos",
-							JOptionPane.INFORMATION_MESSAGE, null, null, 0.00).toString());
-					exception=false;
+					String input=(String) JOptionPane.showInputDialog(null, "Ingrese la cantidad de dinero que desea convertir: ", "Ingreso de datos",
+							JOptionPane.INFORMATION_MESSAGE, null, null, 0.00);
+					if(input==null) {//Opción de cancelar.
+						exception=false;
+					}
+					else {
+						dineroConvertir=Float.parseFloat(input);
+						exception=false;
+					}
+
 				}catch(NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Ingrese un dato numérico.");
-				}catch(NullPointerException e) {//Opción de cancelar
-					exception=false;
 				}
+
 			}
-			
-			
-			
 		}
-		else if(seleccion1==opcMenuPrincipal[1]) {//Convertir temperatura
-			
+		
+		else if(seleccion==opcMenuPrincipal[1]) {//Convertir temperatura
+
 		}
 	}
 }
