@@ -14,7 +14,7 @@ public class MonedaValor {
 	 * @param pesoMexicano Cantidad de dinero a convertir.
 	 * @param tipoConversion Numero que define a cuál moneda se va a convertir.
 	 * @return Cantidad de peso mexicano convertido.
-	 * @throws MonedaException La opción del tipo de conversión es inválida.
+	 * @throws MonedaException Si la opción del tipo de conversión es inválida.
 	 */
 	public float convertirMoneda(int tipoConversion, float pesoMexicano) throws MonedaException {
 		for(int i=0; i<this.valorMoneda.length; i++) {
