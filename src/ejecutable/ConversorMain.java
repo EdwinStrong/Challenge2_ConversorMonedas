@@ -12,7 +12,7 @@ import clases.MonedaNombreEnum;
 
 
 public class ConversorMain {
-	
+
 	/**-
 	 * Este método se encarga de definir el nombre de las monedas en plural para mostrar la conversión..
 	 * @param nombreMoneda proviene de la clase enum encargada de definir la cantidad de monedas utilizadas.
@@ -43,72 +43,105 @@ public class ConversorMain {
 		return moneda;
 	}
 
-	public static void main(String[] args) throws MonedaException {
+	/**
+	 * Este método contiene toda la lógica detrás del proceso de la conversión de una moneda. Realizado mediante indices.
+	 * @throws MonedaException Encargada de validar que los indices de las opciones de conversión de la clase MonedaValor sean correctas.
+	 */
+	public static void conversionMoneda() throws MonedaException {
+		HashMap<Integer, String> opcConversion = new HashMap<>();//Hashmap de opciones de conversión de monedas.
 
-		String[] opcMenuPrincipal = {"Conversor de moneda", "Conversor de temperatura"};
-		
-		//Opciones de conversiones
-		String seleccion=(String) JOptionPane.showInputDialog(null, "Seleccione una opción de conversión", "Menu", JOptionPane.INFORMATION_MESSAGE,
-				null, opcMenuPrincipal, opcMenuPrincipal[0]);
+		MonedaValor monedaConversion=new MonedaValor();//Instancia de clase para conversiones.
 
-		if(seleccion==opcMenuPrincipal[0]) {//Convertir moneda
-			
-			HashMap<Integer, String> opcConversion = new HashMap<>();//Hashmap de opciones de conversión de monedas.
+		MonedaNombreEnum[] nombreMoneda=MonedaNombreEnum.values();//Array de valores constantes de nombres de monedas.
 
-			MonedaValor monedaConversion=new MonedaValor();//Instancia de clase para conversiones.
-			
-			MonedaNombreEnum[] nombreMoneda=MonedaNombreEnum.values();//Array de valores constantes de nombres de monedas.
-			
-			//Llenar hashmap que contiene opciones de conversión.
-			for (int i=0; i<nombreMoneda.length; i++) {
-				opcConversion.put(i, "De pesos a " + nombreMoneda[i].toString().toLowerCase().replace("_", " "));
-			}
-			
-			//Variables de apoyo
-			float dineroConvertir=-1;//Cantidad de pesos mexicanos que se quieren convertir.
-			boolean exception=true;;
+		//Llenar hashmap que contiene opciones de conversión.
 
-			while(exception || dineroConvertir < 0) {
-				try {
-					//Solicitar cantidad de dinero a convertir.
-					String input=(String) JOptionPane.showInputDialog(null, "Ingrese la cantidad de dinero que desea convertir: ", "Ingreso de datos",
-							JOptionPane.INFORMATION_MESSAGE, null, null, 0.00);
-					if(input==null) {//Opción de cancelar.
-						break;
-					}
-					else {
-						dineroConvertir=Float.parseFloat(input);
-						exception=false;
-					}
+		int indice=nombreMoneda.length;
 
-				}catch(NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Ingrese un dato numérico.");
+		for (int i=0; i<indice; i++) {
+			opcConversion.put(i, "De pesos a " + nombreMoneda[i].toString().toLowerCase().replace("_", " "));//De pesos a moneda
+			opcConversion.put(indice+i, "De " + nombreMoneda[i].toString().toLowerCase().replace("_", " ") + " a pesos.");//De moneda a pesos
+		}
+
+		//Variables de apoyo
+		float dineroConvertir=-1;//Cantidad de pesos mexicanos que se quieren convertir.
+		boolean exception=true;;
+
+		while(exception || dineroConvertir < 0) {
+			try {
+				//Solicitar cantidad de dinero a convertir.
+				String input=(String) JOptionPane.showInputDialog(null, "Ingrese la cantidad de dinero que desea convertir: ", "Ingreso de datos",
+						JOptionPane.INFORMATION_MESSAGE, null, null, 0.00);
+				if(input==null) {//Opción de cancelar.
+					System.exit(0);//Parar el programa
 				}
+				else {
+					dineroConvertir=Float.parseFloat(input);
+					exception=false;
+				}
+
+			}catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Ingrese un dato numérico.");
 			}
+		}
 
-			//Convertir hashmap a Array
-			List<String> valores = new ArrayList<>(opcConversion.values());//Hashmap a lista dinámica
+		//Convertir hashmap a Array
 
-			Object[] opcionesArray = valores.toArray();//lista dinámica a array
+		List<String> valores = new ArrayList<>(opcConversion.values());//Hashmap a lista dinámica
 
-			String seleccionConversion = (String) JOptionPane.showInputDialog(null, "Elija la moneda a la que deseas convertir tu dinero", "Monedas", JOptionPane.INFORMATION_MESSAGE,
-					null, opcionesArray, opcionesArray[0]);//Me retorna el valor del String del hashmap
+		Object[] opcionesArray = valores.toArray();//lista dinámica a array
 
-			if(seleccionConversion != null) {//Diferente a "Cancelar"
-				//String[] moneda= {"Dolares","Euros","Libras esterlinas","Yen japonés","Won Coreano"};
-				for (int i=0; i<opcConversion.size(); i++) {
-					if(opcConversion.get(i)==seleccionConversion) {//Obtener indice de conversion
-						String mensaje=String.format("$%.3f pesos mexicanos son $%.3f %s", dineroConvertir, monedaConversion.convertirMoneda(i, dineroConvertir), 
-								obtenerNombreMonedas(nombreMoneda[i]));
+		String seleccionConversion = (String) JOptionPane.showInputDialog(null, "Elija la moneda a la que deseas convertir tu dinero", "Monedas", JOptionPane.INFORMATION_MESSAGE,
+				null, opcionesArray, opcionesArray[0]);//Me retorna el valor del String del hashmap
+
+		if(seleccionConversion != null) {//Diferente a "Cancelar"
+			for (int i=0; i<opcConversion.size(); i++) {
+				if(opcConversion.get(i)==seleccionConversion) {//Obtener indice de conversion
+					String mensaje = "Ninguna opción ha sido ejecutada.";
+					try {//Indice normal (Conversión de pesos a otra moneda)
+						mensaje = String.format("$%.3f pesos mexicanos son $%.3f %s", dineroConvertir, monedaConversion.convertirMoneda(i, dineroConvertir), 
+								obtenerNombreMonedas(nombreMoneda[i]));//Mensaje de pesos mexicanos a otra moneda.
+					} catch (MonedaException e) {//Fuera de indice normal (Conversión de otra moneda a pesos)
+						mensaje = String.format("$%.3f %s son $%.3f pesos.", dineroConvertir,obtenerNombreMonedas(nombreMoneda[i-indice]), 
+								monedaConversion.conversionInversa(nombreMoneda[i-indice].toString(), dineroConvertir));//Mensaje de convertir una moneda a pesos mexicanos.
+					}finally {//Impresión de mensaje.
 						JOptionPane.showMessageDialog(null, mensaje);
 					}
 				}
 			}
-
 		}
+	}
 
-		else if(seleccion==opcMenuPrincipal[1]) {//Convertir temperatura
+	/**
+	 * Este es el método principal main, encargado de la compilación de todo el código.
+	 * @param args SI
+	 */
+	public static void main(String[] args){
+		int respuesta=0;
 
-		}
+		do {
+			String[] opcMenuPrincipal = {"Conversor de moneda", "Conversor de temperatura"};
+
+			//Opciones de conversiones
+			String seleccion=(String) JOptionPane.showInputDialog(null, "Seleccione una opción de conversión", "Menu", JOptionPane.INFORMATION_MESSAGE,
+					null, opcMenuPrincipal, opcMenuPrincipal[0]);
+
+			if(seleccion==opcMenuPrincipal[0]) {//Convertir moneda
+				try {
+					conversionMoneda();
+				} catch (MonedaException e) {
+					JOptionPane.showMessageDialog(null, "Error en los indices para la conversión.", null, JOptionPane.ERROR_MESSAGE);
+				}
+			}
+
+			else if(seleccion==opcMenuPrincipal[1]) {//Convertir temperatura
+
+			}
+			
+			respuesta=JOptionPane.showConfirmDialog(null, "¿Desea continuar?");
+			
+		}while(respuesta==JOptionPane.YES_OPTION);
+		
+		JOptionPane.showMessageDialog(null, "Programa finalizado.");//Programa finalizado.
 	}
 }

@@ -2,6 +2,7 @@ package clases;
 
 public class MonedaValor {
 	
+	//Valor de 1 peso mexicano a respectiva moneda
 	private float[] valorMoneda = {0.0584233f, 0.0534826f, 0.0458863f, 8.44455f, 76.81f};
 	
 	/**
@@ -22,6 +23,23 @@ public class MonedaValor {
 				return pesoMexicano*valorMoneda[i];//Retorna el valor de la moneda convertida.
 			}
 		}
-		throw new MonedaException("Opcion de conversion no valida.");
+		throw new MonedaException("Opcion de conversión no valida.");
+	}
+	
+	/**
+	 * 
+	 * @param tipoMoneda Un enum que contenda el nombre del tipo de la moneda a convertir.
+	 * @param cantidadMoneda Es la cantidad de la moneda a convertir.
+	 * @return La conversión inversa (de monedas a pesos mexicanos)
+	 * @throws MonedaException Si la opción del tipo de conversión es inválida.
+	 */
+	public float conversionInversa(String tipoMoneda, float cantidadMoneda) throws MonedaException {
+		MonedaNombreEnum[] nombreMoneda=MonedaNombreEnum.values();//Array de valores constantes de nombres de monedas de enum
+		for(int i=0; i<this.valorMoneda.length; i++) {
+			if(tipoMoneda==nombreMoneda[i].toString()) {
+				return cantidadMoneda/valorMoneda[i];//El valor convertido a pesos.
+			}
+		}
+		throw new MonedaException("Opcion de conversión no valida.");
 	}
 }
