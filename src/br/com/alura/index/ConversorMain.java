@@ -116,6 +116,38 @@ public class ConversorMain {
 	 * Este es el método principal main, encargado de la compilación de todo el código.
 	 * @param args parámetro del main.
 	 */
+	
+	public static void conversionTemperatura() {
+		
+		Float temperaturaValor = Float.parseFloat(JOptionPane.showInputDialog(null, "Ingrese la cantidad de temperatura a converitr"));
+		
+		HashMap<String, Float> tipoTemperatura = new HashMap<>();
+		
+		tipoTemperatura.put("De Celsius a Farenheit", (float) (temperaturaValor*1.8 + 32));
+		tipoTemperatura.put("De Celsius a Kelvin", (float) (temperaturaValor + 273.15));
+		
+		tipoTemperatura.put("De Farenheit a Celsius", (float) ((temperaturaValor - 32)/1.8));
+		tipoTemperatura.put("De Farenheit a Kelvin", (float) ((temperaturaValor + 459.67)/1.8));
+		
+		tipoTemperatura.put("De Kelvin a Celsius", (float) (temperaturaValor - 273.15));
+		tipoTemperatura.put("De Kelvin a Farenheit", (float) (temperaturaValor*9 - 459.67));
+		
+		List<String> nombreTemperatura = new ArrayList<>(tipoTemperatura.keySet());//Convertir las claves String a Lista.
+		
+		Object[] opciones = nombreTemperatura.toArray();//Hashmap a Arrau
+
+		String opcion = (String) JOptionPane.showInputDialog(null, "Seleccione la opción.", "Temperatura", JOptionPane.INFORMATION_MESSAGE, null,
+				opciones, opciones[0]);
+		
+		if(opcion!=null) {
+			if(tipoTemperatura.containsKey(opcion)) {
+				String mensaje = String.format("%3.5fº celsius son %3.5fF", temperaturaValor, tipoTemperatura.get(opcion));//Obtener valores de clave (El entero)
+				JOptionPane.showMessageDialog(null, mensaje);
+			}
+		}
+		
+	}
+	
 	public static void main(String[] args){
 		int respuesta=0;
 
@@ -135,7 +167,7 @@ public class ConversorMain {
 			}
 
 			else if(seleccion==opcMenuPrincipal[1]) {//Convertir temperatura
-
+				conversionTemperatura();
 			}
 			
 			respuesta=JOptionPane.showConfirmDialog(null, "¿Desea continuar?");
