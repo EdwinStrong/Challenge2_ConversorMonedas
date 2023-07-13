@@ -1,4 +1,4 @@
-package ejecutable;
+package br.com.alura.index;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import clases.MonedaException;
-import clases.MonedaValor;
-import clases.MonedaNombreEnum;
+import br.com.alura.excepciones.MonedaException;
+import br.com.alura.monedas.MonedaNombreEnum;
+import br.com.alura.monedas.MonedaValor;
 
 
 public class ConversorMain {
@@ -114,7 +114,7 @@ public class ConversorMain {
 
 	/**
 	 * Este es el método principal main, encargado de la compilación de todo el código.
-	 * @param args SI
+	 * @param args parámetro del main.
 	 */
 	public static void main(String[] args){
 		int respuesta=0;

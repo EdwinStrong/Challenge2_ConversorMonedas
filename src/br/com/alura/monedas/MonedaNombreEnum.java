@@ -1,4 +1,4 @@
-package clases;
+package br.com.alura.monedas;
 
 public enum MonedaNombreEnum {
 	DOLAR,

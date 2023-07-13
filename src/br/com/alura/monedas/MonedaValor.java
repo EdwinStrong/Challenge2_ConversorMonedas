@@ -1,4 +1,6 @@
-package clases;
+package br.com.alura.monedas;
+
+import br.com.alura.excepciones.MonedaException;
 
 public class MonedaValor {
 	
