@@ -119,8 +119,27 @@ public class ConversorMain {
 	
 	public static void conversionTemperatura() {
 		
-		Float temperaturaValor = Float.parseFloat(JOptionPane.showInputDialog(null, "Ingrese la cantidad de temperatura a converitr"));
+		Float temperaturaValor = -1f;
+		boolean exception = true;
 		
+		while(exception || temperaturaValor < 0) {
+			try {
+				//Solicitar cantidad de dinero a convertir.
+				String input=(String) JOptionPane.showInputDialog(null, "Ingrese la temperatura a convertir: ", "Ingreso de datos",
+						JOptionPane.INFORMATION_MESSAGE, null, null, 0.00);
+				if(input==null) {//Opción de cancelar.
+					System.exit(0);//Parar el programa
+				}
+				else {
+					temperaturaValor=Float.parseFloat(input);
+					exception=false;
+				}
+
+			}catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Ingrese un dato numérico.");
+			}
+		}
+				
 		HashMap<String, Float> tipoTemperatura = new HashMap<>();
 		
 		tipoTemperatura.put("De Celsius a Farenheit", (float) (temperaturaValor*1.8 + 32));
@@ -132,16 +151,17 @@ public class ConversorMain {
 		tipoTemperatura.put("De Kelvin a Celsius", (float) (temperaturaValor - 273.15));
 		tipoTemperatura.put("De Kelvin a Farenheit", (float) (temperaturaValor*9 - 459.67));
 		
-		List<String> nombreTemperatura = new ArrayList<>(tipoTemperatura.keySet());//Convertir las claves String a Lista.
 		
-		Object[] opciones = nombreTemperatura.toArray();//Hashmap a Arrau
+		List<String> nombreTemperatura = new ArrayList<>(tipoTemperatura.keySet());//Convertir las claves String a Lista.
+				
+		Object[] opciones = nombreTemperatura.toArray();//Hashmap a Array
 
 		String opcion = (String) JOptionPane.showInputDialog(null, "Seleccione la opción.", "Temperatura", JOptionPane.INFORMATION_MESSAGE, null,
 				opciones, opciones[0]);
 		
 		if(opcion!=null) {
 			if(tipoTemperatura.containsKey(opcion)) {
-				String mensaje = String.format("%3.5fº celsius son %3.5fF", temperaturaValor, tipoTemperatura.get(opcion));//Obtener valores de clave (El entero)
+				String mensaje = String.format("%s: \n%3.2f son %3.2f", opcion, temperaturaValor, tipoTemperatura.get(opcion));//Obtener valores de clave (El entero)
 				JOptionPane.showMessageDialog(null, mensaje);
 			}
 		}
@@ -167,7 +187,12 @@ public class ConversorMain {
 			}
 
 			else if(seleccion==opcMenuPrincipal[1]) {//Convertir temperatura
-				conversionTemperatura();
+				
+				try {
+					conversionTemperatura();
+				}catch(Exception e) {
+					
+				}
 			}
 			
 			respuesta=JOptionPane.showConfirmDialog(null, "¿Desea continuar?");
@@ -175,5 +200,6 @@ public class ConversorMain {
 		}while(respuesta==JOptionPane.YES_OPTION);
 		
 		JOptionPane.showMessageDialog(null, "Programa finalizado.");//Programa finalizado.
+		System.exit(0);
 	}
 }

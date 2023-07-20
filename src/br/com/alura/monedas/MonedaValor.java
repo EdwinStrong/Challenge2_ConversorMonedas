@@ -8,7 +8,7 @@ public class MonedaValor {
 	private float[] valorMoneda = {0.0584233f, 0.0534826f, 0.0458863f, 8.44455f, 76.81f};
 	
 	/**
-	 * Realiza la conversión a la moneda:
+	 * Realiza la conversión de pesos mexicanos a la moneda:
 	 * 0. Dolar,
 	 * 1. Euro,
 	 * 2. Libra esterlina,
@@ -29,8 +29,8 @@ public class MonedaValor {
 	}
 	
 	/**
-	 * 
-	 * @param tipoMoneda Un enum que contenda el nombre del tipo de la moneda a convertir.
+	 * Realiza la conversión inversa de la moneda (De cualquier moneda a pesos mexicanos).
+	 * @param tipoMoneda Un enum casteado a String que contenda el nombre del tipo de la moneda a convertir.
 	 * @param cantidadMoneda Es la cantidad de la moneda a convertir.
 	 * @return La conversión inversa (de monedas a pesos mexicanos)
 	 * @throws MonedaException Si la opción del tipo de conversión es inválida.
