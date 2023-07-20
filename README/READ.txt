@@ -1,0 +1,23 @@
+******Esta es la versión que brindaba el trello de alura.           AUTOR: Edwin Alexander Pacheco Guzmán
+
+La conversión realizada es con valores fijos, utilizando la siguiente taza para la moneda:
+
+1 pesos son 0.0584233 dólares, 
+1 pesos son 0.0534826 euros, 
+1 pesos son 0.0458863 libras esterlinas, 
+1 pesos son 8.44455 yen japonés, 
+1 pesos son 76.81 won coreanos.
+
+Y para la temperatura, se usaron las siguientes fórmulas de conversión: 
+
+De Celsius a Farenheit: Celsius * 1.8 + 32
+De Celsius a Kelvin: Celsius + 273.15
+
+De Farenheit a Celsius: (Farenheit - 32)/1.8
+De Farenheit a Kelvin: (Farenheit + 459.67)/1.8
+
+De Kelvin a Celsius: (Kelvin - 273.15)
+De Kelvin a Farenheit: (Kelvin * 9 - 459.67)
+		
+		
+		
